@@ -2,6 +2,7 @@ import { FileSystemDatasource } from "../infrastructure/datasources/file-system.
 import { LogRepositoryImpl } from "../infrastructure/repositories/log.repository.impl";
 import { EmailService } from "./email/email.service";
 
+
 const fileSystemLogRepository = new LogRepositoryImpl(
   new FileSystemDatasource()
 );
@@ -11,12 +12,8 @@ export class Server {
     console.log("Server started...");
 
     //Mandar email
-    const emailService = new EmailService();
-    emailService.sendEmail({
-      to: "juancarlosisobe@gmail.com",
-      subject: "Hola",
-      htmlBody: "<h1> Hola </h1>",
-    });
+    const emailService = new EmailService(fileSystemLogRepository);
+    emailService.sendEmailWithFilesSystemLogs(['juancarlosisobe@gmail.com','juancarlosisobe@gmail.com']);
 
     /*
     CronService.createJob(
